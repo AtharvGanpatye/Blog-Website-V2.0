@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Update{% endblock title %}
+
+{% block body %}
+    <div class="content-section">
+        <form method="POST" class="my-2">
+            {% csrf_token %}
+            <h3>Update Profile</h3>
+            {{ form|crispy}}
+            <button class="btn btn-outline-primary my-3" type="submit">Update</button>
+        </form>
+        <hr>
+    </div>
+    <h3>Your Posts :</h3>
+    {% if user.user_posts.all %}
+        {% for post in user.user_posts.all %}
+            <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 my-2 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                <strong class="d-inline-block mb-1 text-success">{{post.category}}</strong>
+                <h3 class="mb-0">{{post.title}}</h3>
+                <div class="mb-1 text-muted">By <strong> <a href="{% url 'home:home' %}">{{post.author}}</a> </strong>, {{post.timestamp}}</div>
+                <p class="mb-auto my-2" style="font-size:110%"> {{ post.content|safe|truncatechars:100 }} </p>
+                <ul class="list-group list-group-horizontal my-2">
+                    <li class="list-group-item"><a href="{% url 'blog:blogPost' pk=post.sno %}" role="button" class="btn btn-primary">Continue reading</a></li>
+                    <li class="list-group-item"><a href="{% url 'blog:post_update' pk=post.sno%}" role="button" class="btn btn-info">Update</a></li>
+                    <li class="list-group-item"><a href="{% url 'blog:delete' pk=post.sno %}" role="button" class="btn btn-danger">Delete</a></li>
+                </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h4>You have no posts.</h4>
+        <a href="{% url 'blog:new' %}">Create New Post</a>
+    {% endif %}
+
+{% endblock body %}

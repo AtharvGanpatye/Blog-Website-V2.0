@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+blogPost
+{% endblock title %}
+
+{% block body %}
+    {% if post %}
+        <div class="container my-4">
+            <div class="blog-post">
+                <h2 class="blog-post-title">{{ post.title }}</h2>
+                <p class="blog-post-meta text-muted">{{post.timestamp}} By <a href="{% url 'blog:user_posts' username=post.author.username %}"> {{post.author}} </a></p>
+                <hr>
+                <p style="font-size:120%">{{post.content|safe}}</p>
+            </div>
+            {% if post.author == user %}
+                <a href="{% url 'blog:post_update' pk=post.sno %}" role="button" class="btn btn-info">Edit</a>
+                <a href="{% url 'blog:delete' pk=post.sno %}" role="button" class="btn btn-danger">Delete</a>
+            {% endif %}
+        </div>
+        <hr>
+        <din class="container">
+            <h4><strong>Comments: ({{comments.count}})</strong></h4>
+
+            <form action="{% url 'blog:comment' sno=post.sno%}" method="POST">
+                {% csrf_token %}
+                {% if not user.is_authenticated %}
+                    <p>Login To Comment</p>
+                {% endif %}
+                <div class="input-group input-group-md mb-3">
+                    <input type="text" class="form-control" placeholder="Add Your Comment Here" aria-describedby="basic-addon2" name='content'>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary btn-md" type="submit" {% if not user.is_authenticated %}disabled{% endif %}>Comment</button>
+                    </div>
+                </div>
+            </form>
+
+            {% for comment in comments %}
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 my-2 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h5 class="mb-0"><a href="{% url 'blog:user_posts' comment.owner.username%}">{{comment.owner}}</a>, <span style="font-size: 90%" class="mb-1 text-muted">{{comment.timestamp}}</span></h5>
+                        <p style="font-size:110%" class="mb-auto my-2"> {{ comment.content}} </p>
+                    </div>
+                </div>                
+            {% endfor %}
+        </din>
+    {% endif %}
+{% endblock body %}

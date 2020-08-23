@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+User_Posts
+{% endblock title %}
+
+{% block body %}
+    <div class="container my-3">
+    <h3>Posts by <strong>{{ view.kwargs.username }}</strong>:</h3>
+    {% for post in posts %}
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 my-2 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-1 text-success">{{post.category}}</strong>
+            <h3 class="mb-0">{{post.title}}</h3>
+            <div class="mb-1 text-muted">By <strong>{{post.author}} </strong>, {{post.timestamp}}</div>
+            <p class="mb-auto my-2"> {{ post.content|safe|truncatechars:100 }} </p>
+            <div class="my-2"><a href="{% url 'blog:blogPost' pk=post.sno %}" role="button" class="btn btn-primary">Continue reading</a></div>
+          </div>
+      </div>
+    {% endfor %}
+{% endblock body %}

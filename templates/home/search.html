@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block blogactive %}active{% endblock blogactive %}
+
+{% block title %} 
+Results
+{% endblock title %}
+
+{% block body %}
+    <div class="container my-3">
+    <h3>Search Results For : "<strong>{{query}}</strong>" </h3>
+    <hr>
+    {% if posts %}
+    
+    {% for post in posts %}
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-2 my-2 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+          <strong class="d-inline-block mb-1 text-success">{{post.category}}</strong>
+          <h3 class="mb-0">{{post.title}}</h3>
+          <div class="mb-1 text-muted">By <strong>{{post.author}}</strong>, {{post.timestamp}}</div>
+          <p class="mb-auto my-2"> {{ post.content|safe|truncatechars:250 }} </p>
+          <div class="my-2"><a href="{% url 'blog:blogPost' post.sno %}" role="button" class="btn btn-primary">Continue reading</a></div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        No Search Results !
+    </div>
+    <p>Your Query : "<strong>{{query|truncatechars:20}}</strong>" did not match any records. </p>
+    <p>Suggestions :</p>
+    <ul>
+        <li>Make sure that all words are spelled correctly.</li>
+        <li>Try different keywords.</li>
+        <li>Try more general and fewer keywords.</li>
+    </ul>
+    {% endif %}
+
+{% endblock body %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}New{% endblock title %} 
+{% block newactive %}active{% endblock newactive %}
+{% block body %}
+<form method="POST" action="{% url 'blog:post_update' pk=post.sno %}">
+  {% csrf_token %}
+  <div class="form-group my-2">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" id="title" placeholder="Title" value="{{post.title}}">
+  </div>
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select class="form-control" id="category" name="category" value="{{post.category}}">
+      <option>National</option>
+      <option>International</option>
+      <option>Politics</option>
+      <option>Health</option>
+      <option>Science And Technology</option>
+      <option>Sports</option>
+      <option>Entertainment</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="content">Blog Content</label>
+    <textarea class="form-control" id="content" cols="30" rows="10" name='content'>{{post.content}}</textarea>
+  </div>
+    <button type="submit" class="btn btn-success my-2">Update</button>
+</form>
+{% endblock body %}

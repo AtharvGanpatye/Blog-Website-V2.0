@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock title %}
+
+{% block body %}
+    <div class="content-section">
+        <form method="POST" class="my-2">
+            {% csrf_token %}
+            <h3>Login</h3>
+            {{ form|crispy}}
+            <button class="btn btn-outline-primary my-3" type="submit">Login</button>
+        </form>
+        <hr>
+		<small class="text-muted">
+			Need An Account ?
+			<a class="ml-2" href="{% url 'home:register' %}">Register Here</a>
+		</small>
+    </div>
+{% endblock body %}
+<!--
+Default Login Using LoginView is /accounts/profile
+But we can change it in settings.py : LOGIN_REDIRECT_URL = 'home:home'
+-->

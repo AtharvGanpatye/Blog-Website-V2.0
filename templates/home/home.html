@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+ {% block homeactive %}active{% endblock homeactive %} 
+{% block body %}
+    <div class="jumbotron">
+      {% if user.is_authenticated %}
+        <h3 class="alert-heading">Welcome back, {{user.username}}!</h3>
+      {% endif %}
+      <h5>This Is A Blog App Made With Django.</h5>
+      <hr class="my-4">
+      <a class="btn btn-primary" href="{% url 'blog:blogHome' %}" role="button">Go To Blogs</a>
+    </div>
+    
+    <div class="container">
+    
+      <div class="btn-group ml-4" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary btn-lg">National</button>
+        <button type="button" class="btn btn-secondary btn-lg">International</button>
+        <button type="button" class="btn btn-secondary btn-lg">Politics</button>
+        <button type="button" class="btn btn-secondary btn-lg">Health</button>
+        <button type="button" class="btn btn-secondary btn-lg">Science & Technology</button>
+        <button type="button" class="btn btn-secondary btn-lg">Sports</button>
+        <button type="button" class="btn btn-secondary btn-lg">Entertainment</button>
+        <button type="button" class="btn btn-secondary btn-lg">Other</button>
+      </div>
+      <hr>
+      <h4>Popular Blogs :</h4>
+      <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 my-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-success">Design</strong>
+            <h3 class="mb-0">Post title</h3>
+            <div class="mb-1 text-muted">Nov 11</div>
+            <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+          <div class="my-2"><a href="#" class="stretched-link">Continue reading</a></div>
+      </div>
+    </div>
+{% endblock body %}
