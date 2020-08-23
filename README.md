@@ -3,4 +3,5 @@
 Functions : Users can login, create, update, delete, search blogs.
 
 Frontend: HTML, CSS, Bootstrap.
+
 Backend: Python, Django.
